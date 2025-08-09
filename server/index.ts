@@ -8,26 +8,23 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-
-// tiny API logger
 app.use((req, res, next) => {
   const start = Date.now();
-  const p = req.path;
-  let capturedJson: Record<string, any> | undefined;
+  const path = req.path;
+  let capturedJsonResponse: Record<string, any> | undefined;
 
-  const origJson = res.json.bind(res);
-  res.json = function (body: any, ...args: any[]) {
-    capturedJson = body;
-    return origJson(body, ...args);
+  const originalJson = res.json.bind(res) as typeof res.json;
+
+  (res as any).json = (body: any) => {
+    capturedJsonResponse = body;
+    return originalJson(body); // no spread args
   };
 
   res.on("finish", () => {
-    const ms = Date.now() - start;
-    if (p.startsWith("/api")) {
-      let line = `${req.method} ${p} ${res.statusCode} in ${ms}ms`;
-      if (capturedJson) line += ` :: ${JSON.stringify(capturedJson)}`;
+    const duration = Date.now() - start;
+    if (path.startsWith("/api")) {
+      let line = `${req.method} ${path} ${res.statusCode} in ${duration}ms`;
+      if (capturedJsonResponse) line += ` :: ${JSON.stringify(capturedJsonResponse)}`;
       if (line.length > 80) line = line.slice(0, 79) + "…";
       log(line);
     }
@@ -35,6 +32,33 @@ app.use((req, res, next) => {
 
   next();
 });
+// app.use(express.json());
+// app.use(express.urlencoded({ extended: false }));
+
+// // tiny API logger
+// app.use((req, res, next) => {
+//   const start = Date.now();
+//   const p = req.path;
+//   let capturedJson: Record<string, any> | undefined;
+
+//   const origJson = res.json.bind(res);
+//   res.json = function (body: any, ...args: any[]) {
+//     capturedJson = body;
+//     return origJson(body, ...args);
+//   };
+
+//   res.on("finish", () => {
+//     const ms = Date.now() - start;
+//     if (p.startsWith("/api")) {
+//       let line = `${req.method} ${p} ${res.statusCode} in ${ms}ms`;
+//       if (capturedJson) line += ` :: ${JSON.stringify(capturedJson)}`;
+//       if (line.length > 80) line = line.slice(0, 79) + "…";
+//       log(line);
+//     }
+//   });
+
+//   next();
+// });
 
 (async () => {
   const server = await registerRoutes(app);
@@ -48,21 +72,31 @@ app.use((req, res, next) => {
   });
 
   // Dev: Vite middleware. Prod: serve built assets + SPA fallback.
-  if (app.get("env") === "development") {
+   if (app.get("env") === "development") {
     await setupVite(app, server);
   } else {
-    // If you already have serveStatic(app) wired to dist, keep it.
-    // Otherwise, do it explicitly here:
-    try {
-      serveStatic(app);
-    } catch {
-      const distDir = path.join(__dirname, "../dist");
-      app.use(express.static(distDir));
-      app.get("*", (_req, res) => {
-        res.sendFile(path.join(distDir, "index.html"));
-      });
-    }
+    // Serve the built client (client/dist)
+    const distDir = path.join(__dirname, "../client/dist");
+    app.use(express.static(distDir));
+    app.get("*", (_req, res) => {
+      res.sendFile(path.join(distDir, "index.html"));
+    });
   }
+  // if (app.get("env") === "development") {
+  //   await setupVite(app, server);
+  // } else {
+  //   // If you already have serveStatic(app) wired to dist, keep it.
+  //   // Otherwise, do it explicitly here:
+  //   try {
+  //     serveStatic(app);
+  //   } catch {
+  //     const distDir = path.join(__dirname, "../dist");
+  //     app.use(express.static(distDir));
+  //     app.get("*", (_req, res) => {
+  //       res.sendFile(path.join(distDir, "index.html"));
+  //     });
+  //   }
+  // }
 
   // Local dev server. Vercel provides its own server, so don't listen there.
   const isVercel = !!process.env.VERCEL;
