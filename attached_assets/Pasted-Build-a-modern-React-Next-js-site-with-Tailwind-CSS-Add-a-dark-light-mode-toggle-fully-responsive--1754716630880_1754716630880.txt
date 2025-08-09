@@ -1,0 +1,117 @@
+Build a modern React/Next.js site with Tailwind CSS. Add a dark/light mode toggle, fully responsive layout and subtle animations.
+
+Brand
+Business name: Systems Consulting
+
+Tagline: Cloud Services and Modern Workplace Solutions
+
+Colour palette (exact use):
+
+Blue (Primary) – Trust, Smart
+
+Black (Secondary & Text) – Bold
+
+Orange (Secondary) – Attraction
+
+Green (Text) – Stand Out
+
+White (Background) – Neutral
+
+Logo description/style: Wordmark, pictorial, and combination styles; professional, technology-oriented look, representing trust and modern IT solutions.
+
+Target audience: Small-to-mid-sized businesses in Canada (especially GTA) struggling with cloud migration, tenant optimization, SharePoint design, or IT workflow automation.
+
+Brand tone/voice: Professional, solution-focused, technically authoritative but approachable, with emphasis on clarity and reliability.
+
+Global UI
+Sticky navigation bar with: Home, About, Services, Blog, Contact.
+
+Footer with contact info, social links, and copyright.
+
+Trust indicators: Client success focus, technical certifications, measurable results (efficiency gains, cost savings, improved collaboration).
+
+Homepage
+Headline: “Empowering Your Business Through Cloud Innovation”
+
+Sub-headline: “From infrastructure audits to automated workflows, we help you modernize, optimize, and thrive in the cloud.”
+
+Primary CTA: “Book Your Consultation”
+
+Secondary CTA: “Explore Our Services”
+
+About
+Populate with:
+
+Systems Consulting is a Canadian-based IT consulting business specializing in Microsoft 365, SharePoint Online, and automation solutions. With expertise in infrastructure modernization, workflow automation, and hub site design, we help small and mid-sized businesses transition smoothly to the cloud, saving costs and improving collaboration.
+
+Services
+From A2:
+
+Infrastructure Assessment and Modernization
+
+Full workflow and infrastructure audit with modernization roadmap to M365.
+
+Deliverables: user manual, improvement recommendations, scalability guidance.
+
+SharePoint Online Hub Site Configuration
+
+Setup and customization of corporate SharePoint hub sites with Teams integration.
+
+Deliverables: fully configured SharePoint collection, permissions, admin integration docs.
+
+Business Workflow Automation using PowerShell
+
+Identifying and automating repetitive business processes using SPO PowerShell.
+
+Deliverables: automation scripts, training materials, deployment support.
+
+Each service section should have a “Book a Consult” CTA button.
+
+Blog
+Create a Blog page with the following starter post:
+
+Title: Why Small Businesses Can’t Afford to Delay Cloud Migration
+Author: Systems Consulting
+Date: Use current date at build time.
+
+Body:
+
+In today’s fast-changing business world, small and mid-sized businesses can’t afford to be left behind when it comes to technology. Cloud migration is no longer a “nice-to-have” — it’s a necessity for staying competitive, secure, and scalable.
+
+One of the biggest advantages of moving to the cloud is flexibility. With solutions like Microsoft 365 and SharePoint Online, your team can work from anywhere, access documents securely, and collaborate in real-time. This not only increases productivity but also keeps your operations running even during disruptions.
+
+Security is another key factor. Modern cloud platforms offer built-in threat protection, compliance tools, and regular updates — features that are difficult and expensive to replicate on-premises.
+
+Cost savings are also significant. By shifting to a subscription-based model, you avoid large upfront infrastructure costs and only pay for what you use. This frees up cash flow to reinvest in other areas of your business.
+
+At Systems Consulting, we help businesses navigate the migration process smoothly, from infrastructure assessment to full deployment. If you’ve been putting off your cloud transition, now is the time to act. Your future growth depends on it.
+
+Content
+If A5 Part 2 content is provided, feature it in Home and Blog. If not, also include this secondary publishable piece:
+
+“Three Ways Microsoft 365 Can Transform Your Business Operations” — covering collaboration, automation, and cost savings, with a CTA to request a tailored assessment.
+
+Branding
+Apply exact colour palette in Tailwind config.
+
+Implement the logo per description (preferably SVG). Place it in navbar and footer.
+
+Keep copy in brand tone specified above.
+
+SEO & Accessibility
+Meta title/description, Open Graph tags, sitemap, robots.txt.
+
+Semantic HTML, alt text, focus states, aria labels.
+
+Mobile-first performance optimization.
+
+Pages & Routing
+/ — Homepage
+
+/about — About page
+
+/services — Services page
+
+/blog — Blog index with starter post above
+
+/contact — Contact form with validation
